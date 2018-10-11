@@ -12,27 +12,27 @@ public class BeanMapConverter {
 
 
     /**
-     * bean 转化为 Map
+     * Map 转化为 bean
      */
-    public static void beanToMap(){
+    public static void mapToBean(){
 
-        Object o = new Object();
+        MyObject o = new MyObject();
         System.out.println("初始化Object o");
 
         HashMap<String, Object> m = new HashMap<String, Object>();
+        m.put("name","Tom");
+        m.put("age", 11);
         System.out.println("初始化Map m, 并放入Key, Value");
 
-        m.put("key", "value");
         try {
-
+            System.out.println("进行 Map --> bean 转换");
             BeanUtils.populate(o, m);
-            System.out.println("进行 Bean Map 转换");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         System.out.println("进行打印...");
-        printMap(m);
+        printObj(o);
     }
 
 
@@ -42,8 +42,19 @@ public class BeanMapConverter {
         });
     }
 
+    private static void printObj(Object o){
+        System.out.println("将Object类型 转换为 map类型");
+        try {
+            BeanUtils.describe(o).forEach((k,v) -> {
+                System.out.println(k+"-"+v);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args){
-        beanToMap();
+        mapToBean();
     }
 }
